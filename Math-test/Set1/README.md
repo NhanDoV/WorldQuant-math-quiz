@@ -5,5 +5,5 @@
   - [ ] Geometry
   - [ ] Statistics & Probabilities
   - [ ] Algebra
-  - [ ] Optimization
+  - [ ] Algorithm & Optimization
   - [ ] Puzzles [application]
