@@ -1,7 +1,30 @@
 import math
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 
+#=============================== Numeric theory
+def simulation_generated_nums(n_step: int):
+    """
+        For each subset of k numbers, we have 3^k different combination, for example
+            * With 1, we obtain {-1, 0, 1}
+            * With 2, we obtain {-1, 0, 1} +/- 3 = {-4,-3,...,3,4}
+            * With 3, we need {-4,...,4} +/- 3^2 = {-13,12,...,12,13}
+            * With 4, then {-13,..,13} +/- 3^3 = {-40,-39,...,39,40}
+    """
+    init_set = set([-1,0,1])
+    print(150*'=')
+    print(f"{'Step ': ^6}{'adding / subtracting ?? to the set generated before': ^60}{'Generated set': ^60}")
+    print(f"{5*'-': ^6}{40*'-': ^60}{60*'-': ^60}")
+    for round in range(0, n_step+1):
+        if round > 0:
+            add_num = 3**round
+            init_set = [e + add_num for e in init_set] + [e -add_num for e in init_set]            
+        else:
+            add_num = 0
+        new_list = ','.join([str(x) for x in sorted(set(list(init_set)))])
+        print(f"{round: ^6}{add_num:^60}{new_list: <60}")
+        
 #=============================== Pure mathematics
 def prob_random_triangle(a, b, c):
     # Write your code here
@@ -61,3 +84,89 @@ def determinant_unif_rvs():
         EX3 = np.random.rand()
         EX += EX1*EX3 - EX2**2
     return EX / N_sample
+
+# Stats. 4
+def escape_cave_simulation():
+    for example in range(3):
+        N = 5 * (example + 1)
+        time_try = 0
+        print(f"Example {example+1} ==============================================")
+        for n in range(N):
+            prob_trial = np.random.rand()
+            if prob_trial < 1/3:
+                time_try += 3
+                print(f"Successfully escape the cave after {n} failed turns [total: {time_try} hours]")
+                break
+            elif (prob_trial >= 1/3)*(prob_trial < 2/3):
+                time_try += 2
+                print(f"At {n} th trial, you drop back in the cave after 1hour travelling [total: {time_try} hours]")
+                continue
+            else:
+                time_try += 1
+                print(f"At {n} th trial, you drop back in the cave after 2hour travelling [total: {time_try} hours]")
+                continue
+
+def expectation_escape_cave(n_samples):
+    def escape_simulation():
+        N = 5000
+        time_try = 0
+        for n in range(N):
+            prob_trial = np.random.rand()
+            if prob_trial < 1/3:
+                time_try += 3                
+                break
+            elif (prob_trial >= 1/3)*(prob_trial < 2/3):
+                time_try += 2
+                continue
+            else:
+                time_try += 1
+                continue
+        return time_try
+    ls_trials = []
+    for trial in range(n_samples):
+        ls_trials.append( escape_simulation() )
+    return sum(ls_trials) / n_samples
+
+def illustration_curve(x, y, xlab, ylab, tit):
+    plt.figure(figsize=(10, 3))
+    plt.plot(x, y, '-')
+    plt.xlabel(xlab)
+    plt.ylabel(ylab)
+    plt.title(tit)
+    plt.show()
+
+def tossing_3HEAD_simulation(N=10):
+    # Tossing coins N times
+    ls = []    
+    for _ in range(N):
+        p = np.random.rand()
+        ls.append('H' if p > 0.5 else 'T')
+        res = ','.join(ls)
+        # if
+        if 'H,H,H' in res:
+            break    
+    return ls
+
+def expect_time_get_3H_consec(n_samples):
+    EX = 0
+    for _ in range(n_samples):
+        rs = tossing_3HEAD_simulation(50000)
+        EX += len(rs) / n_samples
+    return round(EX)
+
+def inv_transform_rvs(f, f_inv, title, xmax=3):
+    U = [np.random.uniform() for _ in range(10000)]
+    X = [f_inv(u) for u in U]
+    fig, ax = plt.subplots(1, 3, figsize=(20, 4))
+    sns.distplot(U, ax=ax[0])
+    ax[0].set_title("rvs of $\mathcal{U}(0,1)$")
+    x_range = np.linspace(0, max(U), 101)
+    ax[1].plot(x_range, [f_inv(u) for u in x_range], label='inverse of cdf')
+    ax[1].plot([0,4],[0,4], '--', label='identity function y=x')
+    ax[1].plot(np.linspace(0,5), [f(u) for u in np.linspace(0, 5)], label='cdf F(x)')
+    ax[1].set_xlim(0, xmax)
+    ax[1].set_ylim(0, xmax)    
+    ax[1].set_title(title)
+    ax[1].legend()
+    sns.distplot(X, ax=ax[2])
+    ax[2].set_title("rvs of $F^{-1}(\mathcal{U}(0,1))$")
