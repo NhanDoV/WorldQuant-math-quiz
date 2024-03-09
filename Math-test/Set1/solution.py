@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 #=============================== Numeric theory
-def simulation_generated_nums(n_step: int):
+def simulation_generated_nums(n_step: int, show_table: bool):
     """
         For each subset of k numbers, we have 3^k different combination, for example
             * With 1, we obtain {-1, 0, 1}
@@ -13,9 +13,12 @@ def simulation_generated_nums(n_step: int):
             * With 4, then {-13,..,13} +/- 3^3 = {-40,-39,...,39,40}
     """
     init_set = set([-1,0,1])
-    print(150*'=')
-    print(f"{'Step ': ^6}{'adding / subtracting ?? to the set generated before': ^60}{'Generated set': ^60}")
-    print(f"{5*'-': ^6}{40*'-': ^60}{60*'-': ^60}")
+    if show_table:
+        print(f"|{45*'=': ^50}{'Show process as table': ^25}{45*'=': ^50}|")
+        print(f"|{' Step ': ^6}|{'+/- ?? to.the.set.g.before': ^30}|{'Generated set': ^60}")
+        print(f"|{5*'-': ^6}|{35*'-': ^30}|{80*'-': ^60}|")
+    else:
+        print(f"|{45*'=': ^45}{f'Generating process within {n_step} steps': ^25}{45*'=': ^45}|")
     for round in range(0, n_step+1):
         if round > 0:
             add_num = 3**round
@@ -23,7 +26,14 @@ def simulation_generated_nums(n_step: int):
         else:
             add_num = 0
         new_list = ','.join([str(x) for x in sorted(set(list(init_set)))])
-        print(f"{round: ^6}{add_num:^60}{new_list: <60}")
+
+        if show_table:
+            print(f"|{round: ^6}|{add_num:^36}|{new_list: <60}")
+        else:
+            if round > 0:
+                print(f"|* At step {round}, we will add {add_num} into the set generated before,\n|\tthen we obtain `{new_list}`")
+            else:
+                print("|* Initially (step 0), we consider `{-1, 0, 1}`")
         
 #=============================== Pure mathematics
 def prob_random_triangle(a, b, c):
