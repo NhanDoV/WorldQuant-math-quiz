@@ -4,6 +4,39 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 #=============================== Numeric theory
+def right_triangle_triplets(limits):
+    """
+        Tìm 3 cạnh a,b,c của một tam giác vuông sao cho a,b,c <= given limits
+        ===================
+        Example
+        >> right_triangle_triplets(25)
+        ..............................
+                3 4 5
+                8 6 10
+                5 12 13
+                15 8 17
+                12 16 20
+                7 24 25
+        =====================================================================
+    """
+    res = []
+    c, m = 0, 2
+    # Limiting c would limit  
+    while c < limits :           
+        # Now loop on n from 1 to m-1 
+        for n in range(1, m) : 
+            a = m * m - n * n 
+            b = 2 * m * n 
+            c = m * m + n * n 
+  
+            # if c is greater than 
+            # limit then break it 
+            if c > limits : 
+                break
+            res.append((a,b,c)) 
+        m = m + 1
+    return len(res)
+        
 def simulation_generated_nums(n_step: int, show_table: bool):
     """
         For each subset of k numbers, we have 3^k different combination, for example
@@ -11,6 +44,29 @@ def simulation_generated_nums(n_step: int, show_table: bool):
             * With 2, we obtain {-1, 0, 1} +/- 3 = {-4,-3,...,3,4}
             * With 3, we need {-4,...,4} +/- 3^2 = {-13,12,...,12,13}
             * With 4, then {-13,..,13} +/- 3^3 = {-40,-39,...,39,40}
+        ===============================================
+        Example
+        >> simulation_generated_nums(3, True)
+            |  =============================================      Show process as table     =============================================   |
+            | Step |  +/- ?? to.the.set.g.before  |                       Generated set                        
+            |----- |-----------------------------------|------------------------------------------------------------------------------------|
+            |  0   |                 0                  |-1,0,1                                                      
+            |  1   |                 3                  |-4,-3,-2,2,3,4                                              
+            |  2   |                 9                  |-13,-12,-11,-7,-6,-5,5,6,7,11,12,13                         
+            |  3   |                 27                 |-40,-39,-38,-34,-33,-32,-22,-21,-20,-16,-15,-14,14,15,16,20,21,22,32,33,34,38,39,40
+            =================================================================================================================================
+        >> simulation_generated_nums(4, False)
+            |=============================================Generating process within 4 steps=============================================|
+            |* Initially (step 0), we consider `{-1, 0, 1}`
+            |* At step 1, we will add 3 into the set generated before,
+            |	then we obtain `-4,-3,-2,2,3,4`
+            |* At step 2, we will add 9 into the set generated before,
+            |	then we obtain `-13,-12,-11,-7,-6,-5,5,6,7,11,12,13`
+            |* At step 3, we will add 27 into the set generated before,
+            |	then we obtain `-40,-39,-38,-34,-33,-32,-22,-21,-20,-16,-15,-14,14,15,16,20,21,22,32,33,34,38,39,40`
+            |* At step 4, we will add 81 into the set generated before,
+            |	then we obtain `-121,-120,-119,-115,-114,-113,-103,-102,-101,-97,-96,-95,-67,-66,-65,-61,-60,-59,-49,-48,-47,-43,-42,-41,41,42,43,47,48,49,59,60,61,65,66,67,95,96,97,101,102,103,113,114,115,119,120,121`
+            =================================================================================================================================            
     """
     init_set = set([-1,0,1])
     if show_table:
@@ -34,9 +90,98 @@ def simulation_generated_nums(n_step: int, show_table: bool):
                 print(f"|* At step {round}, we will add {add_num} into the set generated before,\n|\tthen we obtain `{new_list}`")
             else:
                 print("|* Initially (step 0), we consider `{-1, 0, 1}`")
+                
+def slope_of_tangent_of_curve(x, y):
+    """
+         Xác định hệ số góc (slope) của đường thẳng tiếp tuyến với 
+                     f(x,y)=xy^2 - 2xy + x^2y-12 
+         tại (x,y)=(1,4)
+    """
+    def diff_f_x(x, y):
+        return (y**2 - 2*y + 2*x*y)
+    def diff_f_y(x, y):
+        return (2*x*y - 2*x + x**2)
+    
+    return f"{-diff_f_x(x, y)}/{diff_f_y(x, y)}"
+
+#=============================== Algorithms
+def algorithm_1():
+    """
+        List all the output in this following scripts
+    """
+    for num in range(10, 12):
+        for k in range(9, num):
+            print(num * k)
+            
+def algorithm_2():
+    """
+        List all the output in this following scripts
+    """
+    def is_prime(n):
+        if n < 2:
+            return False
+        i = 2
+        while i*i <= n:
+            if n % i == 0:
+                return False
+            i += 1
+        return True
+
+    A=0
+    B=2
+    while B < 30:
+        if is_prime(B):
+            A = A + 81
+            print(A, B)
+        B = B+1
         
+def algorithm_3():
+    """
+        Find the output of this algorithms
+    """
+    A = 167
+    B = 91
+    C = 0
+    while A-2 > B:
+        A = A-2
+        C = C+1
+    return C
+
+def algorithm_4():
+    """
+        Find the output of this algorithms
+    """
+    def f(x):
+        r = 1
+        for i in range(x+1):
+            r = r+1
+        return r
+
+    return f(f(f(3)))
+
+def algorithm_5():
+    """
+        Find the output of this algorithms
+    """
+    def func(x, y):
+        return x*y/(x+y)
+    n = 10
+    res = func(2**(n-1), 2**(n))
+    for k in range(8, 0, -1):
+        print(k)
+        res = func(res, 2**k)
+    
+    return res
+
 #=============================== Pure mathematics
 def prob_random_triangle(a, b, c):
+    """
+        Cho 3 cạnh của một tam giác a,b,c
+        Lấy x, y là các số thực có phân phối đều với 
+            x ~ U[0, a]
+            y ~ U[0, b]            
+        Tìm xác suất p sao cho x+y < c
+    """
     # Write your code here
     ma = max(a, b)
     mi = min(a, b)
@@ -53,11 +198,15 @@ def prob_random_triangle(a, b, c):
         denom = c**2 # f"{c**2}/{2*a*b}"
         numer = 2*a*b
     gcdf = math.gcd(denom, numer)
+    
     return f"{denom // gcdf}/{numer // gcdf}"
 
 #================================ Statistics & probability ===================================== #
 # Stats.1
 def factorial(n):
+    """
+        Tính giai thừa n!
+    """
     if n == 0:
         return 1
     else:
@@ -65,6 +214,9 @@ def factorial(n):
 
 # Stats.2
 def illustration_triangle_from_stick():
+    """
+        Mô phỏng minh họa cho bài toán bẻ 1 que thành nhiều đoạn
+    """
     fig, ax = plt.subplots(1, 2, figsize=(20, 5))
     ax[0].plot([0, 2, 5, 0], [1, 4, 0, 1], '-')
     ax[0].plot([0, 2, 5], [1, 4, 0], 'o')
@@ -86,6 +238,11 @@ def illustration_triangle_from_stick():
 
 # Stats.3
 def determinant_unif_rvs():
+    """
+        Thí nghiệm mô phỏng bài toán tìm định thức tạo bởi các BNN có phân phối đều
+            A = [[X1 X2], [X2 X3]]
+        với X1,X2,X3 độc lập
+    """
     N_sample = 1000000
     EX = 0
     for k in range(N_sample):
@@ -97,6 +254,15 @@ def determinant_unif_rvs():
 
 # Stats. 4
 def escape_cave_simulation():
+    """
+        Mô phỏng thí nghiệm một người bị nhốt trong 1 hang động,
+        hang có 3 lối đi
+        - 1 lối thoát sẽ mất 3 hours
+        - 1 lối đi lòng vòng mất 2hours rồi trở về vị trí cũ
+        - 1 lối đi lòng vòng mất 1hour rồi trở về vị trí cũ        
+        ...............
+        Hang tối và giả sử phượt thủ này không thấy đường để xác định và đánh dấu lối nào mình đã vừa đi qua
+    """
     for example in range(3):
         N = 5 * (example + 1)
         time_try = 0
@@ -117,6 +283,10 @@ def escape_cave_simulation():
                 continue
 
 def expectation_escape_cave(n_samples):
+    """
+        Dựa trên function đã được định nghĩa escape_cave_simulation
+        Ta sẽ tính kỳ vọng về số thời gian trung bình để phượt thủ này thoát khỏi hang đó
+    """
     def escape_simulation():
         N = 5000
         time_try = 0
@@ -146,6 +316,10 @@ def illustration_curve(x, y, xlab, ylab, tit):
     plt.show()
 
 def tossing_3HEAD_simulation(N=10):
+    """
+        Mô phỏng thí nghiệm tung một đồng xu liên tiếp N lần
+        thực nghiệm chỉ dừng khi đã xuất hiện liên tiếp 3 đồng xu là mặt sấp
+    """
     # Tossing coins N times
     ls = []    
     for _ in range(N):
@@ -158,6 +332,9 @@ def tossing_3HEAD_simulation(N=10):
     return ls
 
 def expect_time_get_3H_consec(n_samples):
+    """
+        Tính kỳ vọng trung bình số lần gieo để được 3 mặt sấp liên tiếp
+    """
     EX = 0
     for _ in range(n_samples):
         rs = tossing_3HEAD_simulation(50000)
@@ -165,6 +342,9 @@ def expect_time_get_3H_consec(n_samples):
     return round(EX)
 
 def inv_transform_rvs(f, f_inv, title, xmax=3):
+    """
+        Xác định phân phối của nghịch ảnh từ một BNN có phân phối đều
+    """
     U = [np.random.uniform() for _ in range(10000)]
     X = [f_inv(u) for u in U]
     fig, ax = plt.subplots(1, 3, figsize=(20, 4))
