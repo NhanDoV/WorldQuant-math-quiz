@@ -7,6 +7,7 @@
 
 ### Câu 5. Kiểm tra kết quả của thuật toán bên dưới và giải thích
 Với `x @ y = f(x, y)` xác định bởi
+
 $$ f(x,y) = \dfrac{x*y}{x + y} $$
 
 nên với mọi $k \in \mathbb{N}$ thì
@@ -24,6 +25,7 @@ Bằng quy nạp, ta được kết quả cuối cùng là $\dfrac{2^{10}}{2^{10
 Dễ dàng kiểm chứng với `L'Hopital`, chẳng hạn
 
 $$ \lim_{n \to \infty} \dfrac{n^3}{\log(n)} = \lim_{n \to \infty} \dfrac{3n^2}{1/n} = \infty $$
+
 do đó $O(n^3)$ sẽ lớn hơn $O(\log n)$ khi $n$ đủ lớn
 
 Tổng quát, ta có:
