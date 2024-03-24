@@ -12,9 +12,21 @@ Một cách tổng quát, để tạo ra các số nguyên từ $1$ đến $k$ t
 $$ 2k+1 \leq \text{argmin}_{m} 3^{m+1} \Leftrightarrow m = \text{ceil}(\log_3 (2k+1)) - 1$$
 
 Ví dụ, 
-- $(1, 40)$ thì $k=40$ và $$ m = \text{ceil}(\log_3 (2*40 + 1)) - 1 = \text{ceil}(\log_3 (81)) - 1 = 3 $$ và ta cần $m+3=6$ số nguyên tất cả, bao gồm $$\lbrace 0, \pm 1, 3, 3^2, 3^3 \rbrace$$ 
+- $(1, 40)$ thì $k=40$ và 
 
-- $(1, 90)$ thì $k=90$ và $$m = \text{ceil}(\log_3 (2*90 + 1)) - 1 = \log_3 (181) - 1 = 4$$ và ta cần $m+3=7$ số nguyên tất cả, bao gồm $$\lbrace 0, \pm 1, 3, 3^2, 3^3, 3^4 \rbrace$$ 
+$$ m = \text{ceil}(\log_3 (2*40 + 1)) - 1 = \text{ceil}(\log_3 (81)) - 1 = 3 $$
+
+và ta cần $m+3=6$ số nguyên tất cả, bao gồm 
+
+$$\lbrace 0, \pm 1, 3, 3^2, 3^3 \rbrace$$ 
+
+- $(1, 90)$ thì $k=90$ và 
+
+$$m = \text{ceil}(\log_3 (2*90 + 1)) - 1 = \log_3 (181) - 1 = 4$$
+
+và ta cần $m+3=7$ số nguyên tất cả, bao gồm 
+
+$$\lbrace 0, \pm 1, 3, 3^2, 3^3, 3^4 \rbrace$$ 
 
 ### 2. Hỏi có bao nhiêu tam giác vuông có cạnh nguyên bé hơn 2000?
 
@@ -62,20 +74,31 @@ $$ s = \dfrac{-f'_x(1,4)}{f'_y(1,4)} = \dfrac{-16}{7} $$
 
 - Dễ dàng kiểm chứng 2 đáp án đầu tiên là... đéo đúng
 - Đáp án C đúng. Thật vậy, ta đặt $f(x) = \dfrac{3^{3^x}}{4^{2^x}}$ thì ta có
+
 $$ f'(x) = 2^{-2^(1 + x)} 3^{3^x} (3^x \log^2(3) - 2^x \log(2) \log(4)) $$
+
 Dễ thấy rằng
+
 $$ f'(x) \geq 1, \qquad \forall x \geq 1 $$
+
 mà $f(1) = \dfrac{27}{16} > 1$ do đó
+
 $$ f(x) > f(1) > 1, \qquad \forall x \geq 1 $$
+
 - D sai. Lưu ý rằng $\log_a b^c = \dfrac{\log b^c}{\log a} = \dfrac{c \log b}{\log a}, \qquad \forall a, b$ 
 
 do đó
 
 $$ \log_{2^{1000}} 3^{100} = \dfrac{100 \log 3}{1000 \log 2} = \dfrac{\log 3}{10 \log 2} $$
+
 và tương tự
+
 $$ \log_{3^{10000}} 2^{1000} = \dfrac{\log2}{10 \log 3} $$
 
 Vì 
+
 $$ \log_2 2 < \log_2 3 $$
+
 nên ta được
+
 $$ \dfrac{\log 3}{10 \log 2} > \dfrac{\log2}{10 \log 3} $$ 

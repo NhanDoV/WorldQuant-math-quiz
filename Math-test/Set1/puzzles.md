@@ -32,11 +32,11 @@ $$ P (\text{Đồng 2023'th là `T` hay `H` không quan trọng nếu Anna > 2 B
 
 Mà
 
-$$ P (\text{Đồng 2023'th là `T` hay `H` không quan trọng nếu Anna > 2 Bob với 2022 đồng trước}) = \alpha $$
+$ P (\text{Đồng 2023'th là `T` hay `H` không quan trọng nếu Anna > 2 Bob với 2022 đồng trước}) = \alpha $
 
 và 
 
-$$ P(\text{Đồng 2023'th là `H` nếu Anna = 2 Bob với 2022 đồng trước}) = \dfrac{1}{2} \gamma $$
+$ P(\text{Đồng 2023'th là `H` nếu Anna = 2 Bob với 2022 đồng trước}) = \dfrac{1}{2} \gamma $
 
 Do đó, câu trả lời cuối cùng là $\dfrac{1}{2}$
 
