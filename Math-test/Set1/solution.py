@@ -173,6 +173,55 @@ def algorithm_5():
     
     return res
 
+def check_algo_order(n=1e3):
+    """
+      Với cùng một bài toán, giả sử ta có các thuật toán với các độ phức tạp như sau
+      Example
+      >> check_algo_order()
+
+            Với n = 1000.0, thứ tự độ phức tạp của các thuật toán được sắp xếp tăng dần như sau:
+            
+            |======|========================================|========================================|
+            | STT  |            complexity.level            |        complexity with n=1000.0        |
+            |======|========================================|========================================|
+            |  1   |       complexity_O(log(log(n)))        |           1.9326447339160655           |
+            |......|........................................|........................................|
+            |  2   |       complexity_O(sqrt(log(n)))       |           2.628260884878466            |
+            |......|........................................|........................................|
+            |  3   |       complexity_O(log(sqrt(n)))       |           3.4538776394910684           |
+            |......|........................................|........................................|
+            |  4   |          complexity_O(log(n))          |           6.907755278982137            |
+            |......|........................................|........................................|
+            |  5   |         complexity_O(sqrt(n))          |           31.622776601683793           |
+            |......|........................................|........................................|
+            |  6   |            complexity_O(n)             |                 1000.0                 |
+            |......|........................................|........................................|
+            |  7   |           complexity_O(n^2)            |               1000000.0                |
+            |......|........................................|........................................|
+            |  8   |           complexity_O(n^3)            |              1000000000.0              |
+            |......|........................................|........................................|      
+    """
+    from math import log
+    #------------ Ở đây ta xét khi giá trị n đủ lớn, do đó nếu n < 1 thì phải nhập lại
+    if n < 1:
+        raise ValueError("please input the value of n greater enough, such as 1e3(or 1000), 1e4, 5000")
+    else:
+        pass
+    # -----------------------------------------
+    order_by_n = [n**3, n**2, n, n**0.5, log(n), log(log(n)), log(n**0.5), (log(n)**0.5)]
+    order_name = ['n^3', 'n^2', 'n', 'sqrt(n)', 'log(n)', 'log(log(n))', 'log(sqrt(n))', 'sqrt(log(n))']
+    algo_name = [f"complexity_O({k})" for k in order_name]
+
+    l = [(algo_name[k], order_by_n[k]) for k, va in enumerate(order_name)]
+    l = sorted(l, key = lambda x: x[1])
+    print(f"Với n = {n}, thứ tự độ phức tạp của các thuật toán được sắp xếp tăng dần như sau:")
+    print(f"|{6*'=': ^6}|{40*'=': ^40}|{40*'=': ^40}|")
+    print(f"|{'STT': ^6}|{'complexity.level': ^40}|{f'complexity with n={n}': ^40}|")
+    print(f"|{6*'=': ^6}|{40*'=': ^40}|{40*'=': ^40}|")    
+    for idx, (name, val) in enumerate(l):
+        print(f"|{str(idx+1): ^6}|{name: ^40}|{str(val): ^40}|")
+        print(f"|{6*'.': ^6}|{40*'.': ^40}|{40*'.': ^40}|")
+
 #=============================== Pure mathematics
 def prob_random_triangle(a, b, c):
     """
