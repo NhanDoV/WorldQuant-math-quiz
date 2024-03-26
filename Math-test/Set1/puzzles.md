@@ -62,4 +62,4 @@ vì trong số $40\%$ những người được khảo sát thích mùa đông c
 - Vào `3:15` thì nó nằm giữa $3$ và $4$ nên góc này là một mảnh nhỏ của $30^0$
 - Tiếp theo, $15$ phút bằng một phần bốn của toàn bộ góc tạo bởi $3$ và $4$ giờ nên $3:15$ xấp xỉ $\frac{30^0}{4} = 7.5^0$
 
-### Câu 5. We call a place on Earth "nice" if you ga 1 mile `North`, 1 mile `West`, 1 mile `South` and 1 mile `East` then you end up at exactly the same place you started, but you did not visit any location more than twice, What is the minimum number of circumferences covering all nice places on Earth
+### Câu 6. We call a place on Earth "nice" if you ga 1 mile `North`, 1 mile `West`, 1 mile `South` and 1 mile `East` then you end up at exactly the same place you started, but you did not visit any location more than twice, What is the minimum number of circumferences covering all nice places on Earth
